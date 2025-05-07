@@ -6,6 +6,7 @@ import authRouter from './Routes/auth.routes.js'
 import subcriptionRouter from './Routes/subcription.routes.js' 
 import connectToDatabase from './database/mongodb.js' 
 import errorMiddleware from './Middlewares/error.middleware.js' 
+import arcjetMiddleware from './Middlewares/arcjet.middleware.js' 
 import cookieParser from 'cookie-parser' 
 
 // Initialisation de l'application Express
@@ -23,6 +24,9 @@ app.use(express.urlencoded({ extended: false }))
 
 // ✅ Middleware pour lire les cookies dans les requêtes entrantes
 app.use(cookieParser())
+
+// Middleware pour utiliser Arcjet
+app.use(arcjetMiddleware)
 
 // --------------------------------------------
 // Enregistrement des routes principales (API)
