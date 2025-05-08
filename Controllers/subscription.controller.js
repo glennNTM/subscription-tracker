@@ -1,15 +1,29 @@
 import Subscription from "../Models/subscription.model.js"
+import { Client } from '@upstash/workflow'
+const qstash = new Client({ token: process.env.QSTASH_TOKEN });
 
 export const createSubscription = async (req, res, next) => {
-    try {
-        const subscription = await Subscription.create({ ...req.body, user: req.user._id })
+  try {
+    // Création de l'abonnement
+    const subscription = await Subscription.create({ ...req.body, user: req.user._id });
 
-        res.status(201).json({ success: true, data: subscription })
-    } catch (error) {
-        next(error)
-    }
+    // Lancement du workflow via QStash
+    const response = await qstash.publishJSON({
+      url: process.env.WORKFLOW_URL, // l'URL de ton workflow Upstash
+      body: { subscriptionId: subscription._id },
+    });
 
-}
+    // Retourne l'abonnement + l'ID du workflow lancé
+    res.status(201).json({
+      success: true,
+      data: subscription,
+      workflowRunId: response.messageId // parfois nommé messageId, à confirmer avec la doc Upstash
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 
 export const getUserSubscriptions = async (req, res, next) => {
     try {

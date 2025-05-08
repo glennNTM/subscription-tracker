@@ -8,6 +8,7 @@ import connectToDatabase from './database/mongodb.js'
 import errorMiddleware from './Middlewares/error.middleware.js' 
 import arcjetMiddleware from './Middlewares/arcjet.middleware.js' 
 import cookieParser from 'cookie-parser' 
+import workflowRouter from './Routes/workflow.routes.js'
 
 // Initialisation de l'application Express
 const app = express()
@@ -40,6 +41,9 @@ app.use('/api/v1/auth', authRouter)
 
 // Routes pour les abonnements
 app.use('/api/v1/subscriptions', subscriptionRouter)
+
+// Routes pour les flux de travail
+app.use('/api/v1/workflows', workflowRouter)
 
 // --------------------------------------------
 // Route d'accueil simple
