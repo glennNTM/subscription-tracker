@@ -3,7 +3,7 @@ import express from 'express'
 import { PORT } from './config/env.js' 
 import userRouter from './Routes/user.routes.js' 
 import authRouter from './Routes/auth.routes.js' 
-import subcriptionRouter from './Routes/subcription.routes.js' 
+import subscriptionRouter from './Routes/subscription.routes.js' 
 import connectToDatabase from './database/mongodb.js' 
 import errorMiddleware from './Middlewares/error.middleware.js' 
 import arcjetMiddleware from './Middlewares/arcjet.middleware.js' 
@@ -39,7 +39,7 @@ app.use('/api/v1/users', userRouter)
 app.use('/api/v1/auth', authRouter)
 
 // Routes pour les abonnements
-app.use('/api/v1/subcriptions', subcriptionRouter)
+app.use('/api/v1/subscriptions', subscriptionRouter)
 
 // --------------------------------------------
 // Route d'accueil simple
